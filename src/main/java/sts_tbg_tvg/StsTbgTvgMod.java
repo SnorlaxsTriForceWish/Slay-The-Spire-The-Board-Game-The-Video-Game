@@ -66,8 +66,8 @@ public class StsTbgTvgMod implements
         BaseMod.subscribe(this); //This will make BaseMod trigger all the subscribers at their appropriate times.
         logger.info(modID + " subscribed to BaseMod.");
 
-        // Register character card color
-        BoardGameIronclad.Meta.registerColor();
+        // Note: Not registering RED card color since we're reusing the base game's RED color
+        // via @SpireEnum(name = "RED") in BoardGameIronclad.Enums
     }
 
     @Override

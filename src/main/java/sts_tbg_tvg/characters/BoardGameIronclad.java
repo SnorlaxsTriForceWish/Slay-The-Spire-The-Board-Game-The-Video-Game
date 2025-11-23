@@ -2,7 +2,7 @@ package sts_tbg_tvg.characters;
 
 import basemod.BaseMod;
 import basemod.abstracts.CustomPlayer;
-import basemod.animations.AbstractAnimation;
+import basemod.animations.SpineAnimation;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -46,7 +46,7 @@ public class BoardGameIronclad extends CustomPlayer {
     // Character-specific static values
     private static final int ENERGY_PER_TURN = 3;
     private static final int MAX_HP = 10;
-    private static final int STARTING_GOLD = 99;
+    private static final int STARTING_GOLD = 3;
     private static final int CARD_DRAW = 5;
     private static final int ORB_SLOTS = 0;
 
@@ -76,34 +76,14 @@ public class BoardGameIronclad extends CustomPlayer {
     private static final String BUTTON = "images/ui/charSelect/ironcladButton.png";
     private static final String PORTRAIT = "images/ui/charSelect/ironcladPortrait.jpg";
 
-    // Card backgrounds - we'll use the base red color card backgrounds
-    private static final String BG_ATTACK_512 = "images/512/bg_attack_red.png";
-    private static final String BG_SKILL_512 = "images/512/bg_skill_red.png";
-    private static final String BG_POWER_512 = "images/512/bg_power_red.png";
-    private static final String BG_ENERGY_512 = "images/512/bg_energy_red.png";
-    private static final String BG_ATTACK_1024 = "images/1024/bg_attack_red.png";
-    private static final String BG_SKILL_1024 = "images/1024/bg_skill_red.png";
-    private static final String BG_POWER_1024 = "images/1024/bg_power_red.png";
-    private static final String BG_ENERGY_1024 = "images/1024/bg_energy_red.png";
-
-    // Energy orb assets
-    private static final String ORB_VFX = "sts_tbg_tvg/images/ui/topPanel/energyOrbRed.png";
+    // Note: Card backgrounds and energy orb assets are inherited from base game's RED color
+    // No need to define custom paths when reusing existing color via @SpireEnum(name = "RED")
 
     public BoardGameIronclad(String name) {
         super(name, Enums.BOARD_GAME_IRONCLAD,
               new String[] { SHOULDER_1, SHOULDER_2, SHOULDER_1 },
               CORPSE,
-              new AbstractAnimation() {
-                  @Override
-                  public Type type() {
-                      return Type.NONE;
-                  }
-
-                  @Override
-                  public void renderSprite(SpriteBatch sb, float x, float y) {
-                      // Empty - will be handled by skeleton animation
-                  }
-              });
+              new SpineAnimation(SKELETON_ATLAS, SKELETON_JSON, 1.0f));
 
         // Load strings before creating loadout
         loadStrings();
@@ -117,9 +97,6 @@ public class BoardGameIronclad extends CustomPlayer {
                 0.0F, 0.0F, 200.0F, 250.0F,
                 new EnergyManager(ENERGY_PER_TURN)
         );
-
-        // Load animation from Ironclad skeleton files
-        loadAnimation(SKELETON_ATLAS, SKELETON_JSON, 1.0f);
 
         // Set up dialog position
         this.dialogX = (this.drawX + 0.0F * Settings.scale);
@@ -280,21 +257,8 @@ public class BoardGameIronclad extends CustomPlayer {
 
     // Meta class for registration
     public static class Meta {
-        public static void registerColor() {
-            BaseMod.addColor(
-                    Enums.RED,
-                    Color.RED,
-                    Color.RED,
-                    Color.RED,
-                    Color.RED,
-                    Color.RED,
-                    Color.RED,
-                    Color.RED,
-                    BG_ATTACK_512, BG_SKILL_512, BG_POWER_512, BG_ENERGY_512,
-                    BG_ATTACK_1024, BG_SKILL_1024, BG_POWER_1024, BG_ENERGY_1024,
-                    ORB_VFX
-            );
-        }
+        // Note: No registerColor() method needed since we're reusing the base game's RED color
+        // via @SpireEnum(name = "RED") in the Enums class
 
         public static void registerCharacter() {
             loadStrings(); // Ensure strings are loaded before accessing NAMES
