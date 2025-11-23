@@ -25,6 +25,7 @@ import com.megacrit.cardcrawl.helpers.ScreenShake;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import com.megacrit.cardcrawl.screens.CharSelectInfo;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
+import com.megacrit.cardcrawl.ui.panels.energyorb.EnergyOrbRed;
 import sts_tbg_tvg.StsTbgTvgMod;
 
 import java.util.ArrayList;
@@ -93,6 +94,9 @@ public class BoardGameIronclad extends CustomPlayer {
                 0.0F, 0.0F, 200.0F, 250.0F,
                 new EnergyManager(ENERGY_PER_TURN)
         );
+
+        // Use base game Ironclad's energy orb
+        this.energyOrb = new EnergyOrbRed();
 
         // Set up dialog position
         this.dialogX = (this.drawX + 0.0F * Settings.scale);
