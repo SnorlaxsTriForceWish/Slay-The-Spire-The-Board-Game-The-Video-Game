@@ -87,7 +87,7 @@ public class BoardGameIronclad extends CustomPlayer {
     private static final String BG_ENERGY_1024 = "images/1024/bg_energy_red.png";
 
     // Energy orb assets
-    private static final String ORB_VFX = "images/ui/topPanel/energyOrbRed.png";
+    private static final String ORB_VFX = "sts_tbg_tvg/images/ui/topPanel/energyOrbRed.png";
 
     public BoardGameIronclad(String name) {
         super(name, Enums.BOARD_GAME_IRONCLAD,

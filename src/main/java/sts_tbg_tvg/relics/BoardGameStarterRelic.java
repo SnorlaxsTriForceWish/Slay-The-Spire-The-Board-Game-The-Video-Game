@@ -14,7 +14,7 @@ public class BoardGameStarterRelic extends BaseRelic {
     // Use Burning Blood image from base game
     private static final String IMG_NAME = "burningBlood.png";
 
-    private static final int HEAL_AMOUNT = 6;
+    private static final int HEAL_AMOUNT = 1;
 
     public BoardGameStarterRelic() {
         super(ID, IMG_NAME, BoardGameIronclad.Enums.RED, RelicTier.STARTER, LandingSound.MAGICAL);
