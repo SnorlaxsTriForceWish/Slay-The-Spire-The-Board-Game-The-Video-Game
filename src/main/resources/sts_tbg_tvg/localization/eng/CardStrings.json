@@ -8,5 +8,22 @@
       "If you need to use it for stuff.",
       "Blizzard is a good example for this."
     ]
+  },
+  "${modID}:BG_HeavyBlow": {
+    "NAME": "Heavy Blow",
+    "DESCRIPTION": "Deal !D! damage. NL Draw 1 card.",
+    "UPGRADE_DESCRIPTION": "Deal !D! damage. NL Draw 1 card."
+  },
+  "${modID}:BG_Strike": {
+    "NAME": "Strike",
+    "DESCRIPTION": "Deal !D! damage."
+  },
+  "${modID}:BG_Defend": {
+    "NAME": "Defend",
+    "DESCRIPTION": "Gain !B! Block."
+  },
+  "${modID}:BG_Bash": {
+    "NAME": "Bash",
+    "DESCRIPTION": "Deal !D! damage. NL Apply !M! Vulnerable."
   }
 }

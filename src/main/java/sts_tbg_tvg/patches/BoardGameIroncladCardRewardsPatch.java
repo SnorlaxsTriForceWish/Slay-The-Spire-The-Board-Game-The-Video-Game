@@ -36,9 +36,13 @@ public class BoardGameIroncladCardRewardsPatch {
                 ___srcUncommonCardPool.isEmpty() &&
                 ___srcRareCardPool.isEmpty()) {
 
-                // Add all RED cards to appropriate rarity pools
+                // Add all RED cards (both base game and custom Board Game cards) to appropriate rarity pools
                 for (AbstractCard card : CardLibrary.getAllCards()) {
-                    if (card.color == AbstractCard.CardColor.RED &&
+                    // Include base game RED cards and custom Board Game cards
+                    boolean isBaseGameRedCard = card.color == AbstractCard.CardColor.RED;
+                    boolean isCustomBoardGameCard = card.cardID != null && card.cardID.startsWith("sts_tbg_tvg:");
+
+                    if ((isBaseGameRedCard || isCustomBoardGameCard) &&
                         card.rarity != AbstractCard.CardRarity.BASIC &&
                         card.rarity != AbstractCard.CardRarity.SPECIAL &&
                         card.rarity != AbstractCard.CardRarity.CURSE) {

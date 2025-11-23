@@ -176,8 +176,13 @@ public class StsTbgTvgMod implements
 
     @Override
     public void receiveEditCards() {
-        // No custom cards needed - BoardGameIronclad uses base game RED cards
-        logger.info("Board Game Ironclad will use base game RED cards.");
+        // Add custom Board Game Ironclad cards
+        new AutoAdd(modID)
+                .packageFilter(sts_tbg_tvg.cards.boardgame.BoardGameCard.class)
+                .setDefaultSeen(true)
+                .cards();
+
+        logger.info("Board Game Ironclad custom cards registered.");
     }
 
     @Override

@@ -8,7 +8,9 @@
       "Bash(mvn clean package:*)",
       "Bash(cmd /c build.bat)",
       "Bash(dir:*)",
-      "Bash(findstr:*)"
+      "Bash(findstr:*)",
+      "Bash(cmd /c \"dir /s /b src\\main\\java\\sts_tbg_tvg\\cards\\*.java\")",
+      "Bash(cmd /c:*)"
     ],
     "deny": [],
     "ask": []

@@ -107,24 +107,24 @@ public class BoardGameIronclad extends CustomPlayer {
     public ArrayList<String> getStartingDeck() {
         ArrayList<String> retVal = new ArrayList<>();
 
-        // Standard Ironclad starting deck
-        // 5 Strikes
-        for (int i = 0; i < 5; i++) {
-            retVal.add("Strike_R");
-        }
-        // 4 Defends
+        // Board Game Ironclad starting deck
+        // 4 Strikes (BG version: 1 damage each)
         for (int i = 0; i < 4; i++) {
-            retVal.add("Defend_R");
+            retVal.add(makeID("BG_Strike"));
         }
-        // 1 Bash
-        retVal.add("Bash");
+        // 4 Defends (BG version: 1 block each)
+        for (int i = 0; i < 4; i++) {
+            retVal.add(makeID("BG_Defend"));
+        }
+        // 1 Bash (BG version: 2 damage, applies Vulnerable)
+        retVal.add(makeID("BG_Bash"));
 
         return retVal;
     }
 
     @Override
     public AbstractCard getStartCardForEvent() {
-        return new com.megacrit.cardcrawl.cards.red.Strike_Red();
+        return new sts_tbg_tvg.cards.boardgame.BG_Strike();
     }
 
     @Override
