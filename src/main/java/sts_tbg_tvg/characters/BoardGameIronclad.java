@@ -108,8 +108,8 @@ public class BoardGameIronclad extends CustomPlayer {
         ArrayList<String> retVal = new ArrayList<>();
 
         // Board Game Ironclad starting deck
-        // 4 Strikes (BG version: 1 damage each)
-        for (int i = 0; i < 4; i++) {
+        // 5 Strikes (BG version: 1 damage each)
+        for (int i = 0; i < 5; i++) {
             retVal.add(makeID("BG_Strike"));
         }
         // 4 Defends (BG version: 1 block each)

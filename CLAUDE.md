@@ -234,10 +234,6 @@ src/test/java/sts_tbg_tvg/
 1. **Executable Tests** (GeneralUtilsTest): Test pure utility logic without game dependencies
 2. **Documentation Tests** (StsTbgTvgModTest, BoardGameIroncladTest): Marked with `@Ignore`, these document what would be tested if code were refactored for testability
 
-**Running Tests:**
-- Tests run automatically with `build.bat` or `mvn clean package`
-- Run tests only: `mvn test`
-- Skip tests: `mvn clean package -DskipTests`
 
 **Writing Tests:**
 1. Create test classes in `src/test/java/` mirroring the package structure of `src/main/java/`
@@ -284,7 +280,6 @@ public class GeneralUtilsTest {
    - Add `@Ignore` tests documenting what should be tested if refactored
    - Consider adding helper methods that can be tested independently
 4. **Implement the functionality**
-5. **Run tests**: `mvn test` or `build.bat` to verify all tests pass
 6. **Update existing tests**: If behavior changes affect existing tests, update them
 
 **When Modifying Existing Code:**
