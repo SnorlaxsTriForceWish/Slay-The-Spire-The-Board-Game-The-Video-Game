@@ -108,7 +108,7 @@ public class StsTbgTvgMod implements
     EditStringsSubscriber,      // Custom text/localization
     EditKeywordsSubscriber,     // Custom keywords
     AddAudioSubscriber,         // Custom sounds
-    PostInitializeSubscriber {  // Post-init setup
+    PostInitializeSubscriber {}   // Post-init setup
 ```
 
 Each interface provides a callback method called at specific initialization phases.
@@ -207,7 +207,7 @@ Full design specifications are in `.llm/board_game_rule_context.md`.
 ### Common Patterns
 
 **Accessing game state:**
-```java
+```
 AbstractDungeon.player           // Current player
 AbstractDungeon.getCurrRoom()    // Current room
 AbstractDungeon.actionManager    // Action queue
