@@ -3,6 +3,7 @@ package sts_tbg_tvg;
 import basemod.AutoAdd;
 import basemod.BaseMod;
 import basemod.interfaces.AddAudioSubscriber;
+import basemod.interfaces.EditCardsSubscriber;
 import basemod.interfaces.EditCharactersSubscriber;
 import basemod.interfaces.EditKeywordsSubscriber;
 import basemod.interfaces.EditRelicsSubscriber;
@@ -41,6 +42,7 @@ import java.util.*;
 public class StsTbgTvgMod implements
         EditStringsSubscriber,
         EditKeywordsSubscriber,
+        EditCardsSubscriber,
         EditCharactersSubscriber,
         EditRelicsSubscriber,
         AddAudioSubscriber,
@@ -80,6 +82,9 @@ public class StsTbgTvgMod implements
         //If you want to set up a config panel, that will be done here.
         //You can find information about this on the BaseMod wiki page "Mod Config and Panel".
         BaseMod.registerModBadge(badgeTexture, info.Name, GeneralUtils.arrToString(info.Authors), info.Description, null);
+
+        // Register Board Game Ironclad to receive RED card rewards
+        logger.info("Configuring Board Game Ironclad to use RED card pool for rewards...");
     }
 
     /*----------Localization----------*/
@@ -167,6 +172,12 @@ public class StsTbgTvgMod implements
         {
             keywords.put(info.ID, info);
         }
+    }
+
+    @Override
+    public void receiveEditCards() {
+        // No custom cards needed - BoardGameIronclad uses base game RED cards
+        logger.info("Board Game Ironclad will use base game RED cards.");
     }
 
     @Override

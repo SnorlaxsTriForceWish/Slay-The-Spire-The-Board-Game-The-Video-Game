@@ -173,19 +173,6 @@ public class BoardGameIronclad extends CustomPlayer {
     }
 
     @Override
-    public ArrayList<AbstractCard> getCardPool(ArrayList<AbstractCard> tmpPool) {
-        // Populate with all RED cards from the card library
-        // tmpPool is empty because BaseMod filters by PlayerClass, not CardColor
-        ArrayList<AbstractCard> retVal = new ArrayList<>();
-        for (AbstractCard card : CardLibrary.getAllCards()) {
-            if (card.color == AbstractCard.CardColor.RED) {
-                retVal.add(card);
-            }
-        }
-        return retVal;
-    }
-
-    @Override
     public Color getCardTrailColor() {
         return Color.RED.cpy();
     }
