@@ -18,6 +18,7 @@ import com.megacrit.cardcrawl.core.EnergyManager;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.cutscenes.CutscenePanel;
 import com.megacrit.cardcrawl.events.city.Vampires;
+import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.ScreenShake;
@@ -38,6 +39,8 @@ public class BoardGameIronclad extends CustomPlayer {
         public static AbstractPlayer.PlayerClass BOARD_GAME_IRONCLAD;
         @SpireEnum(name = "BOARD_GAME_RED")
         public static AbstractCard.CardColor BOARD_GAME_RED;
+        @SpireEnum(name = "BOARD_GAME_RED")
+        public static CardLibrary.LibraryType BOARD_GAME_LIBRARY_TYPE;
     }
 
     // Character-specific static values
@@ -49,14 +52,25 @@ public class BoardGameIronclad extends CustomPlayer {
 
     // Localization strings
     private static final String ID = makeID("BoardGameIronclad");
-    private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(ID);
-    private static final String[] NAMES = characterStrings.NAMES;
-    private static final String[] TEXT = characterStrings.TEXT;
+    private static CharacterStrings characterStrings;
+    private static String[] NAMES;
+    private static String[] TEXT;
+
+    // Lazy load character strings when first needed
+    private static void loadStrings() {
+        if (characterStrings == null) {
+            characterStrings = CardCrawlGame.languagePack.getCharacterString(ID);
+            NAMES = characterStrings.NAMES;
+            TEXT = characterStrings.TEXT;
+        }
+    }
 
     // Image paths - we'll use base game Ironclad assets
     private static final String SHOULDER_1 = "images/characters/ironclad/shoulder.png";
     private static final String SHOULDER_2 = "images/characters/ironclad/shoulder2.png";
     private static final String CORPSE = "images/characters/ironclad/corpse.png";
+    private static final String SKELETON_ATLAS = "images/characters/ironclad/idle/skeleton.atlas";
+    private static final String SKELETON_JSON = "images/characters/ironclad/idle/skeleton.json";
 
     // Character select screen assets
     private static final String BUTTON = "images/ui/charSelect/ironcladButton.png";
@@ -79,19 +93,35 @@ public class BoardGameIronclad extends CustomPlayer {
         super(name, Enums.BOARD_GAME_IRONCLAD,
               new String[] { SHOULDER_1, SHOULDER_2, SHOULDER_1 },
               CORPSE,
-              (AbstractAnimation) null); // No custom animation
+              new AbstractAnimation() {
+                  @Override
+                  public Type type() {
+                      return Type.NONE;
+                  }
 
-        // Initialize starting stats
+                  @Override
+                  public void renderSprite(SpriteBatch sb, float x, float y) {
+                      // Empty - will be handled by skeleton animation
+                  }
+              });
+
+        // Load strings before creating loadout
+        loadStrings();
+
+        // Initialize class with all the character properties
         initializeClass(
+                null, // Image not needed since we're using skeleton
+                SHOULDER_2, SHOULDER_1,
                 CORPSE,
-                SHOULDER_1, SHOULDER_2,
-                CORPSE,
-                getLoadout(),
+                getLoadout(), // Now we can call instance method
                 0.0F, 0.0F, 200.0F, 250.0F,
                 new EnergyManager(ENERGY_PER_TURN)
         );
 
-        // Load energy orb
+        // Load animation from Ironclad skeleton files
+        loadAnimation(SKELETON_ATLAS, SKELETON_JSON, 1.0f);
+
+        // Set up dialog position
         this.dialogX = (this.drawX + 0.0F * Settings.scale);
         this.dialogY = (this.drawY + 220.0F * Settings.scale);
     }
@@ -131,6 +161,7 @@ public class BoardGameIronclad extends CustomPlayer {
 
     @Override
     public CharSelectInfo getLoadout() {
+        loadStrings(); // Ensure strings are loaded before accessing NAMES/TEXT
         return new CharSelectInfo(
                 NAMES[0], // Character name
                 TEXT[0],  // Character description
@@ -148,6 +179,7 @@ public class BoardGameIronclad extends CustomPlayer {
 
     @Override
     public String getTitle(PlayerClass playerClass) {
+        loadStrings();
         return NAMES[1];
     }
 
@@ -211,6 +243,7 @@ public class BoardGameIronclad extends CustomPlayer {
 
     @Override
     public String getLocalizedCharacterName() {
+        loadStrings();
         return NAMES[0];
     }
 
@@ -221,6 +254,7 @@ public class BoardGameIronclad extends CustomPlayer {
 
     @Override
     public String getSpireHeartText() {
+        loadStrings();
         return TEXT[1];
     }
 
@@ -240,6 +274,7 @@ public class BoardGameIronclad extends CustomPlayer {
 
     @Override
     public String getVampireText() {
+        loadStrings();
         return TEXT[2];
     }
 
@@ -262,6 +297,7 @@ public class BoardGameIronclad extends CustomPlayer {
         }
 
         public static void registerCharacter() {
+            loadStrings(); // Ensure strings are loaded before accessing NAMES
             BaseMod.addCharacter(
                     new BoardGameIronclad(NAMES[0]),
                     BUTTON,
