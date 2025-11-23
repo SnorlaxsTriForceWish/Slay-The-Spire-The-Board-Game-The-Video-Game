@@ -21,10 +21,16 @@ mvn clean package
 ```
 
 This command:
+- Runs all unit tests (build fails if tests fail)
 - Validates JSON files in `src/main/resources`
 - Compiles Java sources (Java 1.8 target)
 - Packages JAR file to `target/sts_tbg_tvg.jar`
 - Automatically copies JAR to Steam mods folder
+
+**Run tests only:**
+```bash
+mvn test
+```
 
 **Clean build artifacts:**
 ```bash
@@ -169,7 +175,7 @@ The mod implements mechanics from the physical board game that differ significan
 
 ### Multiplayer Features to Implement
 1. Multi-character control system (solo mode with 1-4 characters)
-2. Hotseat mode (asymmetric player/character distribution)
+z2. /clHotseat mode (asymmetric player/character distribution)
 3. Disconnect recovery (control transfer between players)
 4. Potion trading between players
 5. Gold pooling at merchants
@@ -186,28 +192,153 @@ Full design specifications are in `.llm/board_game_rule_context.md`.
 - Implement `use()` method for card effects
 - Add localization in `localization/eng/CardStrings.json`
 - Add card art to `images/cards/<type>/`
+- **Testing**: Extract damage calculations or complex logic to utility methods and test them
 
 **Relics**: Extend `BaseRelic` and place in `relics/` package
 - Implement relic trigger methods (e.g., `atBattleStart()`)
 - Add localization in `RelicStrings.json`
 - Add images: small (32x32) and large versions
+- **Testing**: If relic has complex logic, extract to utility methods and add tests
 
 **Powers**: Extend `BasePower` and place in `powers/` package
 - Implement power effects (e.g., `atEndOfTurn()`)
 - Add localization in `PowerStrings.json`
 - Add power icon (32x32) to `images/powers/`
+- **Testing**: Extract any calculations or logic to testable utility methods
 
-### Testing the Mod
+**Utility Classes**: Place in `util/` package for shared logic
+- **Always create corresponding test files** in `src/test/java/sts_tbg_tvg/util/`
+- Test all public methods with comprehensive test cases
+- This is where most of your unit tests should live
 
-**CRITICAL: After making any code changes, you MUST run `build.bat` (Windows) or `mvn clean package` and check for compilation errors to validate your changes.**
+### Building and Testing the Mod
+
+**CRITICAL: After making any code changes, you MUST run `build.bat` (Windows) or `mvn clean package` to validate your changes. This will run unit tests AND check for compilation errors.**
 
 1. Build with `build.bat` (Windows) or `mvn clean package`
-2. Verify the build completes successfully with no errors
-3. JAR is auto-copied to Steam mods folder
-4. Launch Slay the Spire via ModTheSpire
-5. Check console/logs for errors (Log4j logger available via `StsTbgTvgMod.logger`)
+2. **Verify unit tests pass** - the build will fail if any tests fail
+3. Verify the build completes successfully with no compilation errors
+4. JAR is auto-copied to Steam mods folder
+5. Launch Slay the Spire via ModTheSpire for integration testing
+6. Check console/logs for errors (Log4j logger available via `StsTbgTvgMod.logger`)
 
-The build process validates JSON files and compiles Java sources - any errors must be fixed before the mod can run.
+The build process:
+- Runs all unit tests (must pass before packaging)
+- Validates JSON files for correct syntax
+- Compiles Java sources (Java 1.8)
+- Packages JAR and copies to mods folder
+
+### Unit Testing
+
+The project uses JUnit 4 for unit testing. Tests are automatically run during the Maven build process.
+
+**Test Structure:**
+```
+src/test/java/sts_tbg_tvg/
+├── StsTbgTvgModTest.java           # Framework-dependent tests (marked @Ignore)
+├── characters/
+│   └── BoardGameIroncladTest.java  # Character tests (marked @Ignore)
+└── util/
+    └── GeneralUtilsTest.java       # Utility class tests (executable)
+```
+
+**Test File Categories:**
+1. **Executable Tests** (GeneralUtilsTest): Test pure utility logic without game dependencies
+2. **Documentation Tests** (StsTbgTvgModTest, BoardGameIroncladTest): Marked with `@Ignore`, these document what would be tested if code were refactored for testability
+
+**Running Tests:**
+- Tests run automatically with `build.bat` or `mvn clean package`
+- Run tests only: `mvn test`
+- Skip tests: `mvn clean package -DskipTests`
+
+**Writing Tests:**
+1. Create test classes in `src/test/java/` mirroring the package structure of `src/main/java/`
+2. Test class names should end with `Test` (e.g., `GeneralUtilsTest`)
+3. Use JUnit 4 annotations: `@Test`, `@Before`, `@After`
+4. Import assertions: `import static org.junit.Assert.*;`
+
+**Example Test:**
+```java
+package sts_tbg_tvg.util;
+
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class GeneralUtilsTest {
+    @Test
+    public void testArrToString_withMultipleElements() {
+        Object[] elements = new Object[]{"Alice", "Bob", "Charlie"};
+        assertEquals("Alice, Bob, Charlie", GeneralUtils.arrToString(elements));
+    }
+}
+```
+
+**Testing Guidelines:**
+- **Focus on testable code**: Test utility classes and pure logic that doesn't require Slay the Spire game initialization
+- **Framework dependencies**: Classes that depend on `AbstractDungeon`, `BaseMod`, `CardCrawlGame`, or `Gdx` cannot be tested in standard unit tests
+  - Static initializers that load game resources will fail without the game running
+  - Use `@Ignore` annotation to document what would be tested if code were refactored
+- **Refactoring for testability**: Extract game logic into static utility methods that accept dependencies as parameters
+  - Example: Move starting deck composition from instance methods to static utility methods
+  - Example: Extract constants to configuration classes that don't depend on game framework
+- **Test edge cases**: null inputs, empty collections, boundary conditions
+- **Keep tests fast and isolated**: Each test should be independent and run quickly
+
+### Development Workflow with Tests
+
+**IMPORTANT: Always consider testing when adding or modifying code.** Follow this workflow:
+
+**When Adding New Functionality:**
+1. **Check if the logic is testable**: Can it be written without game framework dependencies?
+2. **Write tests first (if testable)**: Define expected behavior in a test before implementing
+3. **If not directly testable**:
+   - Extract testable logic into utility methods/classes
+   - Add `@Ignore` tests documenting what should be tested if refactored
+   - Consider adding helper methods that can be tested independently
+4. **Implement the functionality**
+5. **Run tests**: `mvn test` or `build.bat` to verify all tests pass
+6. **Update existing tests**: If behavior changes affect existing tests, update them
+
+**When Modifying Existing Code:**
+1. **Check for existing tests**: Look for corresponding test files in `src/test/java/`
+2. **Update tests first**: Modify tests to reflect the new expected behavior
+3. **Modify the implementation**
+4. **Run tests**: Verify all tests pass with the new changes
+5. **Add new test cases**: If the modification adds new edge cases or scenarios
+
+**When Adding Utility Classes:**
+1. **Always create a test file**: Utility classes are perfect candidates for unit testing
+2. **Test all public methods**: Cover happy path, edge cases, and error conditions
+3. **Example**: When creating `util/MyHelper.java`, also create `src/test/java/sts_tbg_tvg/util/MyHelperTest.java`
+
+**When Adding Game Framework Code (Cards, Relics, Powers, Characters):**
+1. **Extract testable logic**: Move calculations, validation, and business logic to utility methods
+2. **Test the utilities**: Write tests for the extracted logic
+3. **Document with @Ignore tests**: Create test files showing what would be tested if possible
+4. **Add integration notes**: Document in comments what manual testing is needed in-game
+
+**Test Maintenance:**
+- Keep test files in sync with source code structure
+- Remove tests for deleted functionality
+- Update test assertions when behavior intentionally changes
+- Don't commit broken tests - either fix them or mark them `@Ignore` with a TODO comment
+
+**Example Workflow - Adding a New Utility Method:**
+```java
+// 1. Write test first (src/test/java/sts_tbg_tvg/util/CombatUtilsTest.java)
+@Test
+public void testCalculateDamageWithStrength_positiveStrength() {
+    assertEquals(15, CombatUtils.calculateDamageWithStrength(10, 5));
+}
+
+// 2. Implement method (src/main/java/sts_tbg_tvg/util/CombatUtils.java)
+public static int calculateDamageWithStrength(int baseDamage, int strength) {
+    return baseDamage + strength;
+}
+
+// 3. Run: mvn test
+// 4. Test passes ✓
+```
 
 ### Common Patterns
 
