@@ -18,7 +18,7 @@ import sts_tbg_tvg.util.CardStats;
 public class BG_Bash extends BoardGameCard {
     public static final String ID = makeID("BG_Bash");
 
-    private static final int VULNERABLE_AMOUNT = 2;
+    private static final int VULNERABLE_AMOUNT = 1;
 
     private static final CardStats info = new CardStats(
             AbstractCard.CardColor.RED,

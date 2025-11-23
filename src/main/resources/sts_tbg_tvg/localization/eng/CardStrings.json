@@ -9,11 +9,6 @@
       "Blizzard is a good example for this."
     ]
   },
-  "${modID}:BG_HeavyBlow": {
-    "NAME": "Heavy Blow",
-    "DESCRIPTION": "Deal !D! damage. NL Draw 1 card.",
-    "UPGRADE_DESCRIPTION": "Deal !D! damage. NL Draw 1 card."
-  },
   "${modID}:BG_Strike": {
     "NAME": "Strike",
     "DESCRIPTION": "Deal !D! damage."
