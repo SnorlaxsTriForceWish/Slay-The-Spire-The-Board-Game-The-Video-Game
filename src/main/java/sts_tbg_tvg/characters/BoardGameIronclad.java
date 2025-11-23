@@ -33,14 +33,10 @@ import static sts_tbg_tvg.StsTbgTvgMod.characterPath;
 import static sts_tbg_tvg.StsTbgTvgMod.makeID;
 
 public class BoardGameIronclad extends CustomPlayer {
-    // Character ID and Card Color - must match
+    // Character ID - uses base game RED color for cards
     public static class Enums {
         @SpireEnum
         public static AbstractPlayer.PlayerClass BOARD_GAME_IRONCLAD;
-        @SpireEnum(name = "RED")
-        public static AbstractCard.CardColor RED;
-        @SpireEnum(name = "RED")
-        public static CardLibrary.LibraryType BOARD_GAME_LIBRARY_TYPE;
     }
 
     // Character-specific static values
@@ -162,7 +158,8 @@ public class BoardGameIronclad extends CustomPlayer {
 
     @Override
     public AbstractCard.CardColor getCardColor() {
-        return Enums.RED;
+        // Use base game's RED color to access Ironclad's card pool
+        return AbstractCard.CardColor.RED;
     }
 
     @Override
@@ -177,9 +174,15 @@ public class BoardGameIronclad extends CustomPlayer {
 
     @Override
     public ArrayList<AbstractCard> getCardPool(ArrayList<AbstractCard> tmpPool) {
-        // For now, we'll return empty - eventually we'll add custom cards
-        // Or we could include base Ironclad cards
-        return new ArrayList<>();
+        // Populate with all RED cards from the card library
+        // tmpPool is empty because BaseMod filters by PlayerClass, not CardColor
+        ArrayList<AbstractCard> retVal = new ArrayList<>();
+        for (AbstractCard card : CardLibrary.getAllCards()) {
+            if (card.color == AbstractCard.CardColor.RED) {
+                retVal.add(card);
+            }
+        }
+        return retVal;
     }
 
     @Override
