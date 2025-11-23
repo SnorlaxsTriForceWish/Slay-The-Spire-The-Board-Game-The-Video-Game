@@ -2,12 +2,11 @@ package sts_tbg_tvg.patches;
 
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
 import javassist.CtBehavior;
 import sts_tbg_tvg.characters.BoardGameIronclad;
-
-import java.util.ArrayList;
 
 /**
  * Patch to ensure Board Game Ironclad receives RED card rewards.
@@ -25,9 +24,9 @@ public class BoardGameIroncladCardRewardsPatch {
     @SpireInsertPatch(
             locator = Locator.class
     )
-    public static void Insert(ArrayList<AbstractCard> ___srcCommonCardPool,
-                            ArrayList<AbstractCard> ___srcUncommonCardPool,
-                            ArrayList<AbstractCard> ___srcRareCardPool) {
+    public static void Insert(CardGroup ___srcCommonCardPool,
+                            CardGroup ___srcUncommonCardPool,
+                            CardGroup ___srcRareCardPool) {
         // If playing as Board Game Ironclad, populate card pools with RED cards
         if (AbstractDungeon.player != null &&
             AbstractDungeon.player.chosenClass == BoardGameIronclad.Enums.BOARD_GAME_IRONCLAD) {
@@ -46,13 +45,13 @@ public class BoardGameIroncladCardRewardsPatch {
 
                         switch (card.rarity) {
                             case COMMON:
-                                ___srcCommonCardPool.add(card);
+                                ___srcCommonCardPool.addToBottom(card);
                                 break;
                             case UNCOMMON:
-                                ___srcUncommonCardPool.add(card);
+                                ___srcUncommonCardPool.addToBottom(card);
                                 break;
                             case RARE:
-                                ___srcRareCardPool.add(card);
+                                ___srcRareCardPool.addToBottom(card);
                                 break;
                         }
                     }
