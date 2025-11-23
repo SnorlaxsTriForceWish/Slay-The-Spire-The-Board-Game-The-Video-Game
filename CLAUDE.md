@@ -213,20 +213,75 @@ Full design specifications are in `.llm/board_game_rule_context.md`.
 
 ### Building and Testing the Mod
 
-**CRITICAL: After making any code changes, you MUST run `build.bat` (Windows) or `mvn clean package` to validate your changes. This will run unit tests AND check for compilation errors.**
+**CRITICAL: After making any code changes, you MUST build the mod to validate your changes. This will run unit tests AND check for compilation errors.**
 
-1. Build with `build.bat` (Windows) or `mvn clean package`
+#### Windows Build Instructions
+
+**Prerequisites:**
+- Maven must be installed and added to your system PATH
+- Verify Maven is available by opening Command Prompt and running: `mvn -version`
+
+**Method 1: Double-click build.bat (Easiest)**
+1. Navigate to the project root directory in Windows Explorer
+2. Double-click `build.bat`
+3. A Command Prompt window will open showing the build progress
+4. Review the output for any errors
+5. The window will pause at the end - press any key to close it
+
+**Method 2: Run from Command Prompt**
+1. Open Command Prompt (cmd.exe)
+2. Navigate to the project directory:
+   ```cmd
+   cd D:\STS_BG_Mod\BasicMod-master
+   ```
+3. Run the build script:
+   ```cmd
+   build.bat
+   ```
+
+**Method 3: Run from PowerShell**
+1. Open PowerShell
+2. Navigate to the project directory:
+   ```powershell
+   cd D:\STS_BG_Mod\BasicMod-master
+   ```
+3. Run the build script:
+   ```powershell
+   .\build.bat
+   ```
+
+**Method 4: Run Maven directly (if build.bat doesn't work)**
+```cmd
+cd D:\STS_BG_Mod\BasicMod-master
+mvn clean package
+```
+
+#### Linux/Mac Build Instructions
+
+Run Maven directly from terminal:
+```bash
+cd /path/to/BasicMod-master
+mvn clean package
+```
+
+#### Build Verification Steps
+
+After running the build:
+1. **Check for "BUILD SUCCESS"** message in the output
 2. **Verify unit tests pass** - the build will fail if any tests fail
-3. Verify the build completes successfully with no compilation errors
-4. JAR is auto-copied to Steam mods folder
+3. Check that the JAR was created: `target/sts_tbg_tvg.jar`
+4. Verify the JAR was copied to Steam mods folder (Windows: `D:\SteamLibrary\steamapps\common\SlayTheSpire\mods\`)
 5. Launch Slay the Spire via ModTheSpire for integration testing
 6. Check console/logs for errors (Log4j logger available via `StsTbgTvgMod.logger`)
+
+#### What the Build Process Does
 
 The build process:
 - Runs all unit tests (must pass before packaging)
 - Validates JSON files for correct syntax
-- Compiles Java sources (Java 1.8)
-- Packages JAR and copies to mods folder
+- Compiles Java sources (Java 1.8 target)
+- Packages JAR file to `target/sts_tbg_tvg.jar`
+- Automatically copies JAR to Steam mods folder
 
 ### Unit Testing
 
