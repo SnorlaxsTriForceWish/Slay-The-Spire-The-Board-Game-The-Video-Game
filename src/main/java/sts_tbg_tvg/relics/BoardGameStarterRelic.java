@@ -17,7 +17,7 @@ public class BoardGameStarterRelic extends BaseRelic {
     private static final int HEAL_AMOUNT = 6;
 
     public BoardGameStarterRelic() {
-        super(ID, IMG_NAME, BoardGameIronclad.Enums.BOARD_GAME_RED, RelicTier.STARTER, LandingSound.MAGICAL);
+        super(ID, IMG_NAME, BoardGameIronclad.Enums.RED, RelicTier.STARTER, LandingSound.MAGICAL);
     }
 
     @Override

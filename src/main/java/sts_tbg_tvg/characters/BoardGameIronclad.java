@@ -37,9 +37,9 @@ public class BoardGameIronclad extends CustomPlayer {
     public static class Enums {
         @SpireEnum
         public static AbstractPlayer.PlayerClass BOARD_GAME_IRONCLAD;
-        @SpireEnum(name = "BOARD_GAME_RED")
-        public static AbstractCard.CardColor BOARD_GAME_RED;
-        @SpireEnum(name = "BOARD_GAME_RED")
+        @SpireEnum(name = "RED")
+        public static AbstractCard.CardColor RED;
+        @SpireEnum(name = "RED")
         public static CardLibrary.LibraryType BOARD_GAME_LIBRARY_TYPE;
     }
 
@@ -185,7 +185,7 @@ public class BoardGameIronclad extends CustomPlayer {
 
     @Override
     public AbstractCard.CardColor getCardColor() {
-        return Enums.BOARD_GAME_RED;
+        return Enums.RED;
     }
 
     @Override
@@ -282,7 +282,7 @@ public class BoardGameIronclad extends CustomPlayer {
     public static class Meta {
         public static void registerColor() {
             BaseMod.addColor(
-                    Enums.BOARD_GAME_RED,
+                    Enums.RED,
                     Color.RED,
                     Color.RED,
                     Color.RED,
