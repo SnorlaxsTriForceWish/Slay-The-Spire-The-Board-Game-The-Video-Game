@@ -4,7 +4,11 @@
       "Bash(javap:*)",
       "Bash(sed:*)",
       "Bash(where:*)",
-      "Bash(nul)"
+      "Bash(nul)",
+      "Bash(mvn clean package:*)",
+      "Bash(cmd /c build.bat)",
+      "Bash(dir:*)",
+      "Bash(findstr:*)"
     ],
     "deny": [],
     "ask": []

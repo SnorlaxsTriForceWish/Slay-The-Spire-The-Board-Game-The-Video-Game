@@ -78,13 +78,8 @@ public class BoardGameIronclad extends CustomPlayer {
     public BoardGameIronclad(String name) {
         super(name, Enums.BOARD_GAME_IRONCLAD,
               new String[] { SHOULDER_1, SHOULDER_2, SHOULDER_1 },
-              "images/characters/ironclad/idle/skeleton.json",
-              "images/characters/ironclad/idle/skeleton.atlas",
-              "images/characters/ironclad/idle/skeleton.json");
-
-        // Load energy orb
-        this.dialogX = (this.drawX + 0.0F * Settings.scale);
-        this.dialogY = (this.drawY + 220.0F * Settings.scale);
+              CORPSE,
+              (AbstractAnimation) null); // No custom animation
 
         // Initialize starting stats
         initializeClass(
@@ -96,8 +91,9 @@ public class BoardGameIronclad extends CustomPlayer {
                 new EnergyManager(ENERGY_PER_TURN)
         );
 
-        AnimationState.TrackEntry e = this.state.setAnimation(0, "Idle", true);
-        e.setTime(e.getEndTime() * MathUtils.random());
+        // Load energy orb
+        this.dialogX = (this.drawX + 0.0F * Settings.scale);
+        this.dialogY = (this.drawY + 220.0F * Settings.scale);
     }
 
     @Override
