@@ -1,9 +1,9 @@
 {
-  "${modID}:RelicID": {
-    "NAME": "Good Relic",
-    "FLAVOR": "Flavor text displayed in detailed relic view.",
+  "${modID}:BoardGameStarterRelic": {
+    "NAME": "Burning Blood",
+    "FLAVOR": "The blood of the board game warrior flows with fiery determination.",
     "DESCRIPTIONS": [
-      "Gain [E] at the start of your turn. [E] is an energy icon."
+      "At the end of combat, heal #b1 HP."
     ]
   }
 }

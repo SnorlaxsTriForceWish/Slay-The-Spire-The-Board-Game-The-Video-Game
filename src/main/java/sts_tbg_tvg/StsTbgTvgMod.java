@@ -1,10 +1,15 @@
 package sts_tbg_tvg;
 
+import basemod.AutoAdd;
 import basemod.BaseMod;
 import basemod.interfaces.AddAudioSubscriber;
+import basemod.interfaces.EditCharactersSubscriber;
 import basemod.interfaces.EditKeywordsSubscriber;
+import basemod.interfaces.EditRelicsSubscriber;
 import basemod.interfaces.EditStringsSubscriber;
 import basemod.interfaces.PostInitializeSubscriber;
+import sts_tbg_tvg.characters.BoardGameIronclad;
+import sts_tbg_tvg.relics.BaseRelic;
 import sts_tbg_tvg.util.GeneralUtils;
 import sts_tbg_tvg.util.KeywordInfo;
 import sts_tbg_tvg.util.Sounds;
@@ -22,6 +27,7 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.localization.*;
+import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.scannotation.AnnotationDB;
@@ -35,6 +41,8 @@ import java.util.*;
 public class StsTbgTvgMod implements
         EditStringsSubscriber,
         EditKeywordsSubscriber,
+        EditCharactersSubscriber,
+        EditRelicsSubscriber,
         AddAudioSubscriber,
         PostInitializeSubscriber {
     public static ModInfo info;
@@ -57,6 +65,9 @@ public class StsTbgTvgMod implements
     public StsTbgTvgMod() {
         BaseMod.subscribe(this); //This will make BaseMod trigger all the subscribers at their appropriate times.
         logger.info(modID + " subscribed to BaseMod.");
+
+        // Register character card color
+        BoardGameIronclad.Meta.registerColor();
     }
 
     @Override
@@ -156,6 +167,25 @@ public class StsTbgTvgMod implements
         {
             keywords.put(info.ID, info);
         }
+    }
+
+    @Override
+    public void receiveEditCharacters() {
+        BoardGameIronclad.Meta.registerCharacter();
+    }
+
+    @Override
+    public void receiveEditRelics() {
+        new AutoAdd(modID)
+                .packageFilter(BaseRelic.class)
+                .any(BaseRelic.class, (info, relic) -> {
+                    if (relic.pool != null)
+                        BaseMod.addRelicToCustomPool(relic, relic.pool);
+                    else
+                        BaseMod.addRelic(relic, relic.relicType);
+                    if (info.seen)
+                        UnlockTracker.markRelicAsSeen(relic.relicId);
+                });
     }
 
     @Override
