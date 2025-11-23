@@ -45,7 +45,7 @@ public class BoardGameIronclad extends CustomPlayer {
 
     // Character-specific static values
     private static final int ENERGY_PER_TURN = 3;
-    private static final int MAX_HP = 70;
+    private static final int MAX_HP = 10;
     private static final int STARTING_GOLD = 99;
     private static final int CARD_DRAW = 5;
     private static final int ORB_SLOTS = 0;
