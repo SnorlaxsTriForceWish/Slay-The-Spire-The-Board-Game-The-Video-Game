@@ -76,7 +76,11 @@ public class BoardGameIronclad extends CustomPlayer {
     private static final String ORB_VFX = "images/ui/topPanel/energyOrbRed.png";
 
     public BoardGameIronclad(String name) {
-        super(name, Enums.BOARD_GAME_IRONCLAD, null, null, null, null);
+        super(name, Enums.BOARD_GAME_IRONCLAD,
+              new String[] { SHOULDER_1, SHOULDER_2, SHOULDER_1 },
+              "images/characters/ironclad/idle/skeleton.json",
+              "images/characters/ironclad/idle/skeleton.atlas",
+              "images/characters/ironclad/idle/skeleton.json");
 
         // Load energy orb
         this.dialogX = (this.drawX + 0.0F * Settings.scale);
@@ -91,11 +95,6 @@ public class BoardGameIronclad extends CustomPlayer {
                 0.0F, 0.0F, 200.0F, 250.0F,
                 new EnergyManager(ENERGY_PER_TURN)
         );
-
-        // Load animations - using base game Ironclad skeleton
-        loadAnimation("images/characters/ironclad/idle/skeleton.atlas",
-                "images/characters/ironclad/idle/skeleton.json",
-                1.0f);
 
         AnimationState.TrackEntry e = this.state.setAnimation(0, "Idle", true);
         e.setTime(e.getEndTime() * MathUtils.random());
@@ -118,6 +117,11 @@ public class BoardGameIronclad extends CustomPlayer {
         retVal.add("Bash");
 
         return retVal;
+    }
+
+    @Override
+    public AbstractCard getStartCardForEvent() {
+        return new com.megacrit.cardcrawl.cards.red.Strike_Red();
     }
 
     @Override
@@ -249,11 +253,15 @@ public class BoardGameIronclad extends CustomPlayer {
             BaseMod.addColor(
                     Enums.BOARD_GAME_RED,
                     Color.RED,
+                    Color.RED,
+                    Color.RED,
+                    Color.RED,
+                    Color.RED,
+                    Color.RED,
+                    Color.RED,
                     BG_ATTACK_512, BG_SKILL_512, BG_POWER_512, BG_ENERGY_512,
                     BG_ATTACK_1024, BG_SKILL_1024, BG_POWER_1024, BG_ENERGY_1024,
-                    ORB_VFX,
-                    BUTTON,
-                    PORTRAIT
+                    ORB_VFX
             );
         }
 
