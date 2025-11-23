@@ -74,6 +74,12 @@
             <scope>system</scope>
             <systemPath>${steam.path}/workshop/content/646570/2384072973/TogetherInSpire.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 

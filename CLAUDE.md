@@ -199,10 +199,15 @@ Full design specifications are in `.llm/board_game_rule_context.md`.
 
 ### Testing the Mod
 
-1. Build with `mvn clean package`
-2. JAR is auto-copied to Steam mods folder
-3. Launch Slay the Spire via ModTheSpire
-4. Check console/logs for errors (Log4j logger available via `StsTbgTvgMod.logger`)
+**CRITICAL: After making any code changes, you MUST run `build.bat` (Windows) or `mvn clean package` and check for compilation errors to validate your changes.**
+
+1. Build with `build.bat` (Windows) or `mvn clean package`
+2. Verify the build completes successfully with no errors
+3. JAR is auto-copied to Steam mods folder
+4. Launch Slay the Spire via ModTheSpire
+5. Check console/logs for errors (Log4j logger available via `StsTbgTvgMod.logger`)
+
+The build process validates JSON files and compiles Java sources - any errors must be fixed before the mod can run.
 
 ### Common Patterns
 

@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(javap:*)",
-      "Bash(sed:*)"
+      "Bash(sed:*)",
+      "Bash(where:*)",
+      "Bash(nul)"
     ],
     "deny": [],
     "ask": []
