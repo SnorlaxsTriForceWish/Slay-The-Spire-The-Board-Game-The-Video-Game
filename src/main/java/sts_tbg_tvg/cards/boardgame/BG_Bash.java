@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.VulnerablePower;
+import sts_tbg_tvg.powers.BG_VulnerablePower;
 import sts_tbg_tvg.util.CardStats;
 
 /**
@@ -40,8 +40,8 @@ public class BG_Bash extends BoardGameCard {
         addToBot(new DamageAction(m, new DamageInfo(p, damage, damageTypeForTurn),
                 AbstractGameAction.AttackEffect.BLUNT_HEAVY));
 
-        // Apply Vulnerable
-        addToBot(new ApplyPowerAction(m, p, new VulnerablePower(m, magicNumber, false), magicNumber));
+        // Apply BG_Vulnerable
+        addToBot(new ApplyPowerAction(m, p, new BG_VulnerablePower(m, p, magicNumber), magicNumber));
     }
 
     @Override

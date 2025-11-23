@@ -4,5 +4,13 @@
     "DESCRIPTIONS": [
       "You are Very Cool and Strong."
     ]
+  },
+  "${modID}:BG_Vulnerable": {
+    "NAME": "Vulnerable",
+    "DESCRIPTIONS": [
+      "Takes #bx2 damage from attacks. Loses ",
+      " stack after taking damage. (Max 3 per target, 7 total)",
+      " stacks after taking damage. (Max 3 per target, 7 total)"
+    ]
   }
 }
