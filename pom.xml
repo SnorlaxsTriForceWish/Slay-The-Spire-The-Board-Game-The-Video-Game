@@ -67,6 +67,13 @@
             <scope>system</scope>
             <systemPath>${steam.path}/workshop/content/646570/1609158507/StSLib.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>spireTogether</groupId>
+            <artifactId>TogetherInSpire</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${steam.path}/workshop/content/646570/2384072973/TogetherInSpire.jar</systemPath>
+        </dependency>
     </dependencies>
 
 
