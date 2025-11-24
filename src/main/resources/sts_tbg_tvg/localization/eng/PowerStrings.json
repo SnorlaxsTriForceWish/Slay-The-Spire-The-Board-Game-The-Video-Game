@@ -12,5 +12,13 @@
       " stack after taking damage. (Max 3 per target, 7 total)",
       " stacks after taking damage. (Max 3 per target, 7 total)"
     ]
+  },
+  "${modID}:BG_Strength": {
+    "NAME": "Strength",
+    "DESCRIPTIONS": [
+      "Adds ",
+      " damage to each attack hit. (Max 8 per target, 17 total)",
+      " damage to each attack hit. (Max 8 per target, 17 total)"
+    ]
   }
 }
