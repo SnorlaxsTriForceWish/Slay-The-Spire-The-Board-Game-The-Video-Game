@@ -1,0 +1,11 @@
+{
+  "${modID}:BG_FirstEncounterCultist": {
+    "NAME": "Cultist",
+    "MOVES": [
+      "Incantation"
+    ],
+    "DIALOG": [
+      "Power courses through me!"
+    ]
+  }
+}

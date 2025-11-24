@@ -126,6 +126,8 @@ public class StsTbgTvgMod implements
                 localizationPath(lang, "CharacterStrings.json"));
         BaseMod.loadCustomStringsFile(EventStrings.class,
                 localizationPath(lang, "EventStrings.json"));
+        BaseMod.loadCustomStringsFile(MonsterStrings.class,
+                localizationPath(lang, "MonsterStrings.json"));
         BaseMod.loadCustomStringsFile(OrbStrings.class,
                 localizationPath(lang, "OrbStrings.json"));
         BaseMod.loadCustomStringsFile(PotionStrings.class,
