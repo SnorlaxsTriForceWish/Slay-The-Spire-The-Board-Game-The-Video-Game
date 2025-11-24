@@ -42,8 +42,8 @@ public class BG_FirstEncounterCultist extends AbstractMonster {
         this.loadAnimation("images/monsters/theBottom/cultist/skeleton.atlas",
                           "images/monsters/theBottom/cultist/skeleton.json", 1.0F);
 
-        // Set up animation state
-        com.esotericsoftware.spine.AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
+        // Set up animation state (base game Cultist uses "waving" animation)
+        com.esotericsoftware.spine.AnimationState.TrackEntry e = this.state.setAnimation(0, "waving", true);
         e.setTime(e.getEndTime() * AbstractDungeon.monsterHpRng.random());
 
         // Set damage
@@ -92,8 +92,21 @@ public class BG_FirstEncounterCultist extends AbstractMonster {
 
     @Override
     public void usePreBattleAction() {
-        // Optional: Add a talk action at the start of battle
+        // Play the Cultist's "CAW" sound and show dialogue at the start of battle
         if (DIALOG.length > 0) {
+            // Play the Cultist's signature "CAW" sound effect (randomly chosen from 3 variants)
+            int roll = AbstractDungeon.monsterHpRng.random(2);
+            String soundKey;
+            if (roll == 0) {
+                soundKey = "VO_CULTIST_1A";
+            } else if (roll == 1) {
+                soundKey = "VO_CULTIST_1B";
+            } else {
+                soundKey = "VO_CULTIST_1C";
+            }
+            CardCrawlGame.sound.play(soundKey);
+
+            // Show "CAW CAAAW!" dialogue
             AbstractDungeon.actionManager.addToBottom(new TalkAction(this, DIALOG[0], 0.5F, 2.0F));
         }
     }
